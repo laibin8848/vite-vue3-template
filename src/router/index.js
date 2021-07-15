@@ -32,15 +32,22 @@ export const constantRoutes = [
       hidden: true,
     },
   },
-  // {
-  //   path: '/noFound',
-  //   name: 'NoFound',
-  //   component: () => import(/* webpackChunkName: "noFound" */ '@/views/noFound.vue'),
-  //   meta: {
-  //     title: '404',
-  //     hidden: true,
-  //   },
-  // }
+  {
+    path: '/noFound',
+    name: 'NoFound',
+    component: () => import(/* webpackChunkName: "noFound" */ '@/views/noFound.vue'),
+    meta: {
+      title: '404',
+      hidden: true,
+    },
+  },
+  {
+    path: '/:pathMatch(.*)*', name: 'not-found', component: () => import(/* webpackChunkName: "noFound" */ '@/views/noFound.vue'),
+      meta: {
+      title: 'not-found',
+      hidden: true,
+    }
+  }
 ]
 
 export const asyncRoutes = [];
@@ -54,27 +61,26 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  next()
-  //   const tabsOption = store.getters['tabModule/getTabsOption']
-  //   // 判断当前路由中是否已经入栈
-  //   const flag = tabsOption.findIndex(tab => tab.route === to.fullPath) > -1
-  //   if (!flag && !to.meta.hidden) {
-  //     store.commit('tabModule/ADD_TAB', { route: to.fullPath, title: to.meta.title,name: to.name })
-  //   }
-  //   store.commit('tabModule/SET_TAB', to.fullPath)
-  // if(sessionStorage.getItem('auth')){
-  //   console.log("has authed");
-  //   next()
-  // }else if(to.path==='/login'){
-  //   console.log("/login");
-  //   next();
-  // }else{
-  //   console.log('unauthed into login');
-  //        next({
-  //       path: '/login',
-  //       query: {redirect: to.fullPath}
-  //     })
-  // }
+    const tabsOption = store.getters['tabModule/getTabsOption']
+    // 判断当前路由中是否已经入栈
+    const flag = tabsOption.findIndex(tab => tab.route === to.fullPath) > -1
+    if (!flag && !to.meta.hidden) {
+      store.commit('tabModule/ADD_TAB', { route: to.fullPath, title: to.meta.title,name: to.name })
+    }
+    store.commit('tabModule/SET_TAB', to.fullPath)
+  if(sessionStorage.getItem('auth')){
+    console.log("has authed");
+    next()
+  }else if(to.path==='/login'){
+    console.log("/login");
+    next();
+  }else{
+    console.log('unauthed into login');
+    next({
+      path: '/login',
+      query: {redirect: to.fullPath}
+    })
+  }
 });
 
 export default router;

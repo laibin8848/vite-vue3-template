@@ -70,6 +70,7 @@
 </script>
 <style scoped>
 .app-main {
+  padding: 10px;
   /*50 = navbar  */
   min-height: calc(100vh - 50px);
   width: 100%;
