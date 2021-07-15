@@ -4,10 +4,10 @@
       <div class="login-left">
         <div class="top">
           <div class="title">
-            <span>欢迎使用</span>
+            <span>欢迎您的到来</span>
           </div>
           <div class="desc">
-            <span>一款使用Vite2.x + ElementPlus + Vue3.x搭建的后台管理系统</span>
+            <span>一款使用Vite2.x + ElementPlus + Vue3.x搭建的B端后台管理系统</span>
           </div>
         </div>
         <div class="bottom">
