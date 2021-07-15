@@ -1,41 +1,9 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import legacy from '@vitejs/plugin-legacy'
-import { resolve } from 'path';
-import styleImport from 'vite-plugin-style-import'
+import { defineConfig, mergeConfig } from 'vite'
+import baseConfig from './config.base'
 
-export default defineConfig({
-  base: './',
-  plugins: [
-    vue(),
-    styleImport({
-     libs: [{
-        libraryName: 'element-plus',
-        esModule: true,
-        ensureStyleFile: true,
-        resolveStyle: (name) => {
-          // eslint-disable-next-line no-param-reassign
-          name = name.slice(3)
-          return `element-plus/packages/theme-chalk/src/${name}.scss`;
-        },
-        resolveComponent: (name) => `element-plus/lib/${name}`,
-      }]
-    }),
-    legacy({
-       targets: ['ie >= 11'],
-       additionalLegacyPolyfills: ['regenerator-runtime/runtime']
-     })
-  ],
-  resolve: {
-    alias: {
-      '~': resolve(__dirname, '../'),
-      '@': resolve(__dirname, '../src'),
-    }
-  },
-  clearScreen:false,
+export default defineConfig(mergeConfig(baseConfig, {
   server: {
     host: '0.0.0.0',
-    port: 404,
     open: true,
     cors: true,
     proxy: {
@@ -46,13 +14,5 @@ export default defineConfig({
         rewrite: (path) => path.replace('/api_proxy', '')
       }
     },
-  },
-  build:{
-    commonjsOptions:{
-      ignoreDynamicRequires:false,
-      transformMixedEsModules:true,
-      brotliSize:false,
-      sourceMap:false
-    }
   }
-})
+}))

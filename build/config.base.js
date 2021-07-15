@@ -1,21 +1,14 @@
-import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import legacy from '@vitejs/plugin-legacy'
 import { resolve } from 'path';
 import styleImport from 'vite-plugin-style-import'
+import { injectHtml } from 'vite-plugin-html'
 import { name } from '../package.json'
-import { minifyHtml, injectHtml } from 'vite-plugin-html'
 
-export default defineConfig({
+export default {
   base: './',
   plugins: [
     vue(),
-    minifyHtml(),
-    injectHtml({
-      injectData: {
-        title: name
-      },
-    }),
     styleImport({
      libs: [{
         libraryName: 'element-plus',
@@ -32,6 +25,11 @@ export default defineConfig({
     legacy({
        targets: ['ie >= 11'],
        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+     }),
+     injectHtml({
+       injectData: {
+         title: name
+       },
      })
   ],
   resolve: {
@@ -40,27 +38,5 @@ export default defineConfig({
       '@': resolve(__dirname, '../src'),
     }
   },
-  clearScreen:false,
-  server: {
-    host: '0.0.0.0',
-    port: 404,
-    open: false,
-    cors: true,
-    proxy: {
-      '/api_proxy': {
-        target: 'http://localhost:9000/',
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace('/api_proxy', '')
-      }
-    },
-  },
-  build:{
-    commonjsOptions:{
-      ignoreDynamicRequires:false,
-      transformMixedEsModules:true,
-      brotliSize:false,
-      sourceMap:false
-    }
-  }
-})
+  clearScreen:false
+}

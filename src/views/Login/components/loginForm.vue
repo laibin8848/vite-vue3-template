@@ -1,15 +1,15 @@
 <template>
   <div class="form-container">
-    <el-form ref="loginFormRef" :model="loginForm" status-icon :hide-required-asterisk="true" :rules="rules" label-width="50px" class="login-form">
+    <el-form @keyup.enter.native="submitForm()" ref="loginFormRef" :model="loginForm" status-icon :hide-required-asterisk="true" :rules="rules" label-width="50px" class="login-form">
       <el-form-item label="账号" prop="username">
-        <el-input v-model="loginForm.username" autocomplete="off" placeholder="请输入登录帐号admin"></el-input>
+        <el-input v-model="loginForm.username" autocomplete="off" placeholder="admin"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="loginForm.password" type="password" autocomplete="off" placeholder="请输入密码(123456)"></el-input>
+        <el-input v-model="loginForm.password" type="password" autocomplete="off" placeholder="123456"></el-input>
       </el-form-item>
       <el-form-item>
         <div class="btn-container">
-          <el-button :loading="loading" type="primary" style="width: 100%" @click="submitForm()">登录</el-button>
+          <el-button icon="el-icon-monitor" :loading="loading" type="primary" style="width: 100%" @click="submitForm()">登录</el-button>
         </div>
       </el-form-item>
     </el-form>
@@ -30,8 +30,8 @@
 
       const state = reactive({
         loginForm: {
-          username: '',
-          password: ''
+          username: 'admin',
+          password: '123456'
         },
         loading: false
       })
@@ -58,7 +58,7 @@
               }
             } else {
               ElMessage({
-                type: 'warning',
+                type: 'error',
                 message: '账号或者密码有误'
               })
             }

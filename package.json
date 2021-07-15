@@ -6,7 +6,7 @@
   "license": "ISC",
   "description": "",
   "scripts": {
-    "dev": "vite --config ./build/config.prod.js",
+    "dev": "vite --config ./build/config.dev.js",
     "build": "vite build --config ./build/config.prod.js",
     "lint": "eslint --ext .vue,.js ./src",
     "serve": "vite preview",
