@@ -57,7 +57,7 @@
         const showingChildren = children.filter((item) => {
           // 如果meta 配置隐藏该路由，则返回false;
 
-          if (item?.meta?.hidden) {
+          if (item.meta.hidden) {
             return false
           }
           //

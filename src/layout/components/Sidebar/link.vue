@@ -15,7 +15,6 @@
       },
     },
     setup() {
-      // methods
       const linkProps = (url) => {
         if (isExternal(url)) {
           return {
