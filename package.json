@@ -1,12 +1,12 @@
 {
-  "name": "vite",
+  "name": "yue",
   "version": "0.0.0",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "scripts": {
-    "dev": "vite --config ./build/config.dev.js",
+    "dev": "vite --config ./build/config.prod.js",
     "build": "vite build --config ./build/config.prod.js",
     "lint": "eslint --ext .vue,.js ./src",
     "serve": "vite preview",
@@ -14,10 +14,12 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "css-color-function": "^1.3.3",
     "element-plus": "^1.0.2-beta.55",
+    "js-cookie": "^2.2.1",
     "vue": "^3.0.5",
-    "vue-router": "^3.5.2",
-    "vuex": "^3.6.2"
+    "vue-router": "^4.0.10",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-legacy": "^1.4.4",
