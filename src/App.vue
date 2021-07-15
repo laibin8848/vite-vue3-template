@@ -1,22 +1,28 @@
 <template>
-  <img alt="Vue logo1" src="@/assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
-  {{xxx}}
-  <button @click="onclick">onclick</button>
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
 
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import { ref } from 'vue'
+<script>
+import { defineComponent } from 'vue'
+import { useStore } from '@/store/index'
 
-const xxx = ref(1111)
+export default defineComponent({
+  name: 'App',
+  components: {},
+  setup() {
+    const store = useStore()
 
-const onclick = () => {
-  xxx.value = 2222
-}
-
-// This starter template is using Vue 3 experimental <script setup> SFCs
-// Check out https://github.com/vuejs/rfcs/blob/master/active-rfcs/0040-script-setup.md
+    const resizeHeight = () => {
+      const { clientHeight } = document.body // 获取文档可视区域的宽度
+      const height = Math.max(600, clientHeight - 170) // 保证最小值大于600
+      store.commit('settingsModule/setTableHeight', height) // 设置tableHeight
+    }
+    resizeHeight()
+    return {}
+  }
+})
 </script>
 
 <style>
@@ -26,6 +32,5 @@ const onclick = () => {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
