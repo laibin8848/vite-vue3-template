@@ -9,10 +9,12 @@
     "dev": "vite --config ./build/config.dev.js",
     "build": "vite build --config ./build/config.prod.js",
     "lint": "eslint --ext .vue,.js ./src",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "postinstall": "npm run dev"
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "element-plus": "^1.0.2-beta.55",
     "vue": "^3.0.5",
     "vue-router": "^3.5.2",
     "vuex": "^3.6.2"
