@@ -10,7 +10,6 @@ import { useStore } from '@/store/index'
 
 export default defineComponent({
   name: 'App',
-  components: {},
   setup() {
     const store = useStore()
 

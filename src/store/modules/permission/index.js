@@ -27,7 +27,9 @@ const permissionModule = {
       router.options.routes = constantRoutes.concat(asyncRoutes);
       commit('setRoutes', accessedRoutes);
     },
-
+    setPermissonRoutes({ commit }, data) {
+      commit('setRoutes', data);
+    },
   },
   getters: {
     getAccessRoutes(state) {
