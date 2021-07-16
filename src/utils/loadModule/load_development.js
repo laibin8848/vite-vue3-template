@@ -1,1 +1,1 @@
-export default (module) => import(`@/module/${module}/main.js`);
+export default (module) => import(`../../module/${module}/main.js`);

@@ -1,11 +1,13 @@
-// import Test from '@/module/test/views/Test.vue'
+import Test from '@/module/test/views/Test.vue'
 
 export default {
   routes: [
     {
       path: '/test',
       name: 'test',
-      // component: Test
+      meta: {hidden: false, title: 'test',},
+      component: Test,
+      children: []
     }
   ]
 }
