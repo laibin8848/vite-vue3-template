@@ -15,7 +15,6 @@ export const getStyleTemplate = (data) => {
     }
     Object.keys(colorMap).forEach(key => {
       const value = colorMap[key]
-      // eslint-disable-next-line no-param-reassign
       data = data.replace(new RegExp(key, 'ig'), value)
     })
     return data

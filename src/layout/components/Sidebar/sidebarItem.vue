@@ -44,7 +44,6 @@
       const basePath = toRef(props, 'basePath')
 
       onMounted(() => {
-        // eslint-disable-next-line no-console
         console.log('basePath.value', basePath.value)
       })
       // methods

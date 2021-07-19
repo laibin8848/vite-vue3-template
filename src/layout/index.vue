@@ -48,8 +48,6 @@
       const store = useStore()
       const originalStyle = ref('')
 
-      // eslint-disable-next-line no-console
-      console.log(store)
       const reactiveData = reactive({
         fixedHeader: computed(() => store.state.settingsModule.fixedHeader)
       })

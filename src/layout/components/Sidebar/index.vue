@@ -44,22 +44,19 @@
       onMounted(() => {
         console.log('activeMenu.value', activeMenu.value)
       })
-      // mothods
+
       const handleOpen = (key, keyPath) => {
-        // eslint-disable-next-line no-console
         console.log('key is ', key)
         console.log('keyPath is ', keyPath)
       }
       const handleClose = (key, keyPath) => {
-        // eslint-disable-next-line no-console
         console.log(key, keyPath)
       }
       const handleSelect = (key) => {
         console.log('handleSelect is ', key)
         router.replace({ path: key })
       }
-      // methods
-      // eslint-disable-next-line consistent-return
+
       const resolvePath = (routePath) => {
         if (isExternal(routePath)) {
           return routePath

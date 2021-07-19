@@ -20,7 +20,7 @@ const permissionModule = {
       // api request
       const accessedRoutes = asyncRoutes;
       // 动态添加路由  vue-router4.x 暂时没有addRoutes
-      // eslint-disable-next-line no-restricted-syntax
+
       for (const item of accessedRoutes) {
         router.addRoute(item);
       }
