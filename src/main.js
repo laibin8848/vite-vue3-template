@@ -11,20 +11,26 @@ import 'element-plus/lib/theme-chalk/index.css'
 
 //测试，添加插件化模块机制
 import loadModule from '@/utils/loadModule'
-const moduleList = ['test']
+const moduleList = ['test2','test']
+const promises = []
 moduleList.forEach(module => {
-  loadModule(module).then(moduleExport => {
-    // 注册路由
-    if(moduleExport.routes){
-      moduleExport.routes.map(item => router.addRoute(item))
-    }
-    store.dispatch('permissionModule/setPermissonRoutes', moduleExport.routes)
-  }).catch(err => {
-    console.log('模块加载失败', err)
-  })
+  promises.push(new Promise(reslove=> {
+    loadModule(module).then(moduleExport => {
+      // 注册路由
+      if(moduleExport.routes){
+        moduleExport.routes.map(item => router.addRoute(item))
+      }
+      reslove(moduleExport.routes[0])
+    }).catch(err => {
+      console.log('模块加载失败', err)
+    })
+  }))
+})
+Promise.all(promises).then(res=> {
+  store.dispatch('permissionModule/setPermissonRoutes', res)
 })
 
-store.dispatch('permissionModule/getPermissonRoutes')
+// store.dispatch('permissionModule/getPermissonRoutes')
 
 const app = createApp(App).use(store, key).use(router).use(ElementPlus)
 
