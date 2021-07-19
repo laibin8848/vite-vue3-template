@@ -2,7 +2,6 @@
 export const writeNewStyle = (stylesheetCount, originalStyle, colors) => {
    console.log("originalStyle",originalStyle);
     Object.keys(colors).forEach(key => {
-      // eslint-disable-next-line no-param-reassign
       originalStyle = originalStyle.replace(new RegExp(`(:|\\s+)${  key}`, 'g'), `$1${  colors[key]}`)
     })
     if (stylesheetCount === document.styleSheets.length) {

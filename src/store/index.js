@@ -16,7 +16,6 @@ export const store = createStore({
   },
   mutations: {
     increment(state) {
-      // eslint-disable-next-line no-plusplus
       state.count++;
     },
   },

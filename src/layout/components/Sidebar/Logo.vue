@@ -27,7 +27,7 @@
     },
     setup() {
       const store = useStore()
-      // eslint-disable-next-line no-console
+
       const reactiveData = reactive({
         title: computed(() => store.state.settingsModule.title)
       })

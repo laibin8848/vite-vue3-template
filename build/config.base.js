@@ -15,7 +15,6 @@ export default {
         esModule: true,
         ensureStyleFile: true,
         resolveStyle: (name) => {
-          // eslint-disable-next-line no-param-reassign
           name = name.slice(3)
           return `element-plus/packages/theme-chalk/src/${name}.scss`;
         },

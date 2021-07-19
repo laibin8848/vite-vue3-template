@@ -55,7 +55,6 @@
        * @description 点击tab
        */
       const clickTab = (tabName) => {
-        // eslint-disable-next-line no-console
         store.commit('tabModule/SET_TAB', tabName.paneName)
         router.replace({ path: currentIndex.value })
       }

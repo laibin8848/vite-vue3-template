@@ -11,7 +11,6 @@ const appModule = {
   },
   mutations: {
     TOGGLE_SIDEBAR: (state) => {
-      // eslint-disable-next-line no-console
       state.sidebar.opened = !state.sidebar.opened;
       state.sidebar.withoutAnimation = false;
       if (state.sidebar.opened) {
