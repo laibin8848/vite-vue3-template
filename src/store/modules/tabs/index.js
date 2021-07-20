@@ -1,7 +1,7 @@
 const tabModule = {
   namespaced: true,
   state: {
-    tabsOption:[{route:'/home',title:'首页',name: 'home',}],
+    tabsOption:[{route:'/home',title:'信息汇总',name: 'home',}],
     currentIndex:'/home',
     breadcrumbList:[]
   },
@@ -18,7 +18,7 @@ const tabModule = {
     },
     CLEAR_TAB: (state) => {
         // 初始化tab
-        state.tabsOption=[{route:'/home',title:'首页',name:'home'}];
+        state.tabsOption=[{route:'/home',title:'信息汇总',name:'home'}];
     },
   },
   actions: {

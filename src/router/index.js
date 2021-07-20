@@ -8,7 +8,7 @@ export const constantRoutes = [
     component: layout,
     redirect: '/home',
     meta: {
-      title: '首页',
+      title: '信息汇总',
       icon: 'el-icon-s-home',
     },
     children: [
@@ -16,12 +16,81 @@ export const constantRoutes = [
         path: '/home',
         name: 'home',
         component: () => import(/* webpackChunkName: "home" */ '@/views/Home/home.vue'),
-        meta: {
-          title: '首页',
-          icon: 'home',
-        },
+        meta: { title: '信息汇总' }
+      }
+    ]
+  },
+  {
+    path: '/user/list',
+    component: layout,
+    meta: {
+      title: '用户权限',
+      icon: 'el-icon-user',
+    },
+    children: [
+      {
+        path: '/user/list',
+        name: 'userList',
+        component: () => import(/* webpackChunkName: "UsersList" */ '@/views/Users/list.vue'),
+        meta: { title: '用户列表' },
+        children: []
       },
-    ],
+      {
+        path: '/groups/list',
+        name: 'GroupsList',
+        component: () => import(/* webpackChunkName: "GroupsList" */ '@/views/Groups/list.vue'),
+        meta: { title: '分组管理' },
+        children: []
+      },
+      {
+        path: '/role/list',
+        name: 'RoleList',
+        component: () => import(/* webpackChunkName: "RoleList" */ '@/views/Role/list.vue'),
+        meta: { title: '角色列表' },
+        children: []
+      },
+      {
+        path: '/permisson/list',
+        name: 'permissonList',
+        component: () => import(/* webpackChunkName: "PermissonList" */ '@/views/Permisson/list.vue'),
+        meta: { title: '权限列表' },
+        children: []
+      }
+    ]
+  },
+  {
+    path: '/dictionary/list',
+    component: layout,
+    meta: {
+      title: '字典管理',
+      icon: 'el-icon-copy-document',
+    },
+    children: [
+      {
+        path: '/dictionary/list',
+        name: 'dictionaryList',
+        component: () => import(/* webpackChunkName: "dictionaryList" */ '@/views/Dictionary/list.vue'),
+        meta: { title: '字典列表' },
+        children: []
+      }
+    ]
+  },
+  {
+    path: '/menus/list',
+    component: layout,
+    meta: {
+      title: '菜单管理',
+      icon: 'el-icon-s-order',
+    },
+    children: [
+      {
+        path: '/menus/list',
+        name: 'menusList',
+        component: () => import(/* webpackChunkName: "menusList" */ '@/views/Menu/list.vue'),
+        meta: { title: '菜单列表' },
+        children: []
+      }
+    ]
   },
   {
     path: '/login',
