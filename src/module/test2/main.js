@@ -1,6 +1,9 @@
 import Test from '@/module/test/views/Test.vue'
 
 export default {
+  MN: 'test2',
+  BR: '/test2',
+  icon: 'el-icon-folder',
   routes: [
     {
       path: '/test2',

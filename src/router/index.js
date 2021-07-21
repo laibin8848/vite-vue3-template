@@ -104,7 +104,19 @@ export const constantRoutes = [
       hidden: true,
     }
   }
-]
+];
+
+export function genModuleRoute({MN, BR, icon, routes}) {
+  return {
+    path: BR,
+    component: layout,
+    meta: {
+      title: MN,
+      icon: icon,
+    },
+    children: routes
+  }
+}
 
 export const asyncRoutes = [];
 

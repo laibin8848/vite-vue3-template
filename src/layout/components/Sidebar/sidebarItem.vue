@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-  import { defineComponent, onMounted, ref, toRef } from 'vue'
+  import { defineComponent, ref } from 'vue'
 
   export default defineComponent({
     name: 'SidebarItem',
@@ -40,12 +40,7 @@
     setup(props) {
       // 是否只有一个孩子
       const onlyOneChild = ref()
-      // 析构获取 props 属性 basePath
-      const basePath = toRef(props, 'basePath')
 
-      onMounted(() => {
-        console.log('basePath.value', basePath.value)
-      })
       // methods
       /**
        * @description 展示只有一个孩子的情况
