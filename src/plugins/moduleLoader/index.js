@@ -13,6 +13,9 @@ const moduleLoader = {
               router.addRoute(route)
               reslove(route)
             }
+            if(Object.keys(moduleExport.store.state).length > 0){
+              store.registerModule(`${moduleExport.MN}_Store`, moduleExport.store)
+            }
           }).catch(err => {
             console.log('模块加载失败', err)
           })

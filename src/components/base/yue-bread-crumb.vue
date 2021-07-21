@@ -8,7 +8,7 @@
     </transition-group>
   </el-breadcrumb>
 </template>
-<script lang="ts">
+<script>
 import { defineComponent, onMounted, ref, watch } from 'vue'
 import { compile } from 'path-to-regexp'
 import { useRoute, useRouter } from 'vue-router'
@@ -25,13 +25,13 @@ export default defineComponent({
       levelList.value = matched.filter((item) => item.meta && item.meta.title && item.meta.breadcrumb !== false)
     }
 
-    const pathCompile = (path: string) => {
+    const pathCompile = (path) => {
       const { params } = route
       const toPath = compile(path)
       return toPath(params)
     }
 
-    const handleLink = (item: any) => {
+    const handleLink = (item) => {
       const { redirect, path } = item
       if (redirect) {
         router.push(redirect)
