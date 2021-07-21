@@ -104,7 +104,7 @@ export const constantRoutes = [
       hidden: true,
     }
   }
-];
+]
 
 export function genModuleRoute({MN, BR, icon, routes}) {
   return {
