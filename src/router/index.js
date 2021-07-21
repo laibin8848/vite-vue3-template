@@ -16,7 +16,8 @@ export const constantRoutes = [
         path: '/home',
         name: 'home',
         component: () => import(/* webpackChunkName: "home" */ '@/views/Home/home.vue'),
-        meta: { title: '信息汇总' }
+        meta: { title: '信息汇总' },
+        children: []
       }
     ]
   },
@@ -36,24 +37,10 @@ export const constantRoutes = [
         children: []
       },
       {
-        path: '/groups/list',
-        name: 'GroupsList',
-        component: () => import(/* webpackChunkName: "GroupsList" */ '@/views/Groups/list.vue'),
-        meta: { title: '分组管理' },
-        children: []
-      },
-      {
         path: '/role/list',
         name: 'RoleList',
         component: () => import(/* webpackChunkName: "RoleList" */ '@/views/Role/list.vue'),
         meta: { title: '角色列表' },
-        children: []
-      },
-      {
-        path: '/permisson/list',
-        name: 'permissonList',
-        component: () => import(/* webpackChunkName: "PermissonList" */ '@/views/Permisson/list.vue'),
-        meta: { title: '权限列表' },
         children: []
       }
     ]
