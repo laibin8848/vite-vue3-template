@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { store } from '@/store';
 import layout from '@/layout/index.vue';
+import { moduleList } from '../module/index.json';
 
 export const constantRoutes = [
   {
@@ -118,6 +119,32 @@ export function genModuleRoute({MN, BR, icon, routes}) {
   }
 }
 
+function loadDynamicModule() {
+  const promises = []
+  moduleList.forEach(module => {
+    promises.push(new Promise(reslove=> {
+      import(`../module/${module}/main.js`).then(moduleExport => {
+        if(moduleExport.default.routes){
+          const route = genModuleRoute(moduleExport.default)
+          router.addRoute(route)
+          reslove(route)
+        }
+        if(Object.keys(moduleExport.default.store.state).length > 0){
+          store.registerModule(`${moduleExport.MN}_Store`, moduleExport.default.store)
+        }
+      }).catch(err => {
+        console.log('模块加载失败', err)
+        reslove(null)
+      })
+    }))
+  })
+  Promise.all(promises).then(res=> {
+    let mlist = []
+    mlist = res.filter(item=> item !== null)
+    store.dispatch('permissionModule/setPermissonRoutes', mlist)
+  })
+}
+
 export const asyncRoutes = [];
 
 const router = createRouter({
@@ -125,8 +152,10 @@ const router = createRouter({
   scrollBehavior: () => ({
     top: 0,
   }),
-  routes: constantRoutes,
+  routes: constantRoutes
 });
+
+loadDynamicModule();
 
 router.beforeEach((to, from, next) => {
     const tabsOption = store.getters['tabModule/getTabsOption']

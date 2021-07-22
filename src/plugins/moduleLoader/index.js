@@ -23,11 +23,11 @@ const moduleLoader = {
         }))
       })
 
-      return Promise.all(promises).then(res=> {
-        let mlist = []
-        mlist = res.filter(item=> item !== null)
-        store.dispatch('permissionModule/setPermissonRoutes', mlist)
-      })
-    }
+    Promise.all(promises).then(res=> {
+      let mlist = []
+      mlist = res.filter(item=> item !== null)
+      store.dispatch('permissionModule/setPermissonRoutes', mlist)
+    })
+  }
 }
 export default moduleLoader
