@@ -18,11 +18,15 @@ const moduleLoader = {
             }
           }).catch(err => {
             console.log('模块加载失败', err)
+            reslove(null)
           })
         }))
       })
-      Promise.all(promises).then(res=> {
-        store.dispatch('permissionModule/setPermissonRoutes', res)
+
+      return Promise.all(promises).then(res=> {
+        let mlist = []
+        mlist = res.filter(item=> item !== null)
+        store.dispatch('permissionModule/setPermissonRoutes', mlist)
       })
     }
 }

@@ -14,9 +14,13 @@ import moduleLoader from '@/plugins/moduleLoader'
 
 store.dispatch('permissionModule/getPermissonRoutes')
 
-const app = createApp(App).use(store, key).use(router).use(ElementPlus, {locale: locale})
+const app = createApp(App)
 app.use(moduleLoader, {router: router, store: store})
 
-router.isReady().then(() => app.mount('#app'))
+//hack dynamic module load
+setTimeout(()=> {
+  app.use(store, key).use(router).use(ElementPlus, {locale: locale})
+  router.isReady().then(() => app.mount('#app'))
+}, 500)
 
 router.onError((err) => { console.error(err); })
