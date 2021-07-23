@@ -1,17 +1,21 @@
 <template>
   <div class="global-tab-con">
-    <el-form :inline="true" class="search-form" label-width="80px" label-position="left" :model="searchForm">
-      <el-form-item label="字典名称:">
-        <el-input size="small" placeholder="请输入字典名称" suffix-icon="el-icon-search" v-model="searchForm.dictName"></el-input>
-      </el-form-item>
-      <el-form-item label="字典编号:">
-        <el-input size="small" placeholder="请输入字典编号" suffix-icon="el-icon-search" v-model="searchForm.dictCode"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button size="small" type="primary" @click="onSubmit">查询</el-button>
-        <el-button size="small" @click="onReset">重置</el-button>
-      </el-form-item>
-    </el-form>
+    <el-row>
+      <el-col :span="24" align="left">
+        <el-form :inline="true" class="search-form" label-width="80px" label-position="left" :model="searchForm">
+          <el-form-item label="字典名称:">
+            <el-input size="small" placeholder="请输入字典名称" suffix-icon="el-icon-search" v-model="searchForm.dictName"></el-input>
+          </el-form-item>
+          <el-form-item label="字典编号:" style="margin-left: 20px">
+            <el-input size="small" placeholder="请输入字典编号" suffix-icon="el-icon-search" v-model="searchForm.dictCode"></el-input>
+          </el-form-item>
+          <el-form-item style="margin-left: 20px">
+            <el-button size="small" type="primary" @click="onSubmit">查询</el-button>
+            <el-button size="small" @click="onReset">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
     <el-row>
       <el-col :span="12" align="left">
         <el-button type="primary" icon="el-icon-plus" size="small" @click="addDic">新增</el-button>
@@ -46,18 +50,22 @@
     <el-drawer title="字典列表" v-model="dialogWord" direction="rtl" size="70%"
       ><div class="demo-drawer__content">
         <div class="global-tab-con">
-          <el-form :inline="true" class="search-form" label-width="80px" label-position="left" :model="searchForm">
-            <el-form-item label="字典选项名称:">
-              <el-input size="small" placeholder="请输入字典选项名称" suffix-icon="el-icon-search" v-model="searchForm.dictName"></el-input>
-            </el-form-item>
-            <el-form-item label="字典选项数据值:">
-              <el-input size="small" placeholder="请输入字典选项数据值" suffix-icon="el-icon-search" v-model="searchForm.dictCode"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button size="small" type="primary" @click="onSubmitItem">查询</el-button>
-              <el-button size="small" @click="onResetItem">重置</el-button>
-            </el-form-item>
-          </el-form>
+          <el-row>
+            <el-col :span="24" align="left">
+              <el-form :inline="true" class="search-form" label-width="60px" label-position="left" :model="searchForm">
+                <el-form-item label="名称:">
+                  <el-input size="small" placeholder="请输入字典选项名称" suffix-icon="el-icon-search" v-model="searchForm.dictName"></el-input>
+                </el-form-item>
+                <el-form-item label="数据值:" style="margin-left: 20px;">
+                  <el-input size="small" placeholder="请输入字典选项数据值" suffix-icon="el-icon-search" v-model="searchForm.dictCode"></el-input>
+                </el-form-item>
+                <el-form-item style="margin-left: 20px;">
+                  <el-button size="small" type="primary" @click="onSubmitItem">查询</el-button>
+                  <el-button size="small" @click="onResetItem">重置</el-button>
+                </el-form-item>
+              </el-form></el-col
+            >
+          </el-row>
           <el-row>
             <el-col :span="12" align="left">
               <el-button type="primary" icon="el-icon-plus" size="small" @click="addDicItem()">新增</el-button>
@@ -116,8 +124,8 @@
         <el-form-item label="描述" label-width="120px">
           <el-input v-model="dicItemForm.description" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="排序值" label-width="120px">
-          <el-input v-model="dicItemForm.sortOrder" autocomplete="off" style="width: 100px"></el-input>
+        <el-form-item label="排序值" label-width="120px" class="sort">
+          <el-input v-model="dicItemForm.sortOrder" style="width: 100px"></el-input>
           <span style="margin-left: 10px">值越小越靠前</span>
         </el-form-item>
       </el-form>
@@ -133,7 +141,6 @@
 <script>
 import { computed, defineComponent, ref } from 'vue'
 import useListMethods from '@/hooks/useListMethods'
-import { getUserList, delUser } from '@/apis/users'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import RightDrawer from '../../layout/components/RightSetting/RightDrawer.vue'
 import { deleteDic, getDicDetail, searchDic, saveDic, deleteDicItem, getDicItemDetail, searchDicItem, saveDicItem } from '@/apis/dictionary.js'
@@ -416,3 +423,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss">
+.sort .el-form-item__content{
+  flex: none;
+}
+</style>
