@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div id="app" class="aaa">
+    <corner-marker sign="dev"></corner-marker>
     <router-view></router-view>
   </div>
 </template>
@@ -7,9 +8,13 @@
 <script>
 import { defineComponent } from 'vue'
 import { useStore } from '@/store/index'
+import {cornerMarker} from '@/components/base'
 
 export default defineComponent({
   name: 'App',
+  components: {
+      [cornerMarker.name]: cornerMarker
+  },
   setup() {
     const store = useStore()
 
