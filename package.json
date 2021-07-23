@@ -5,6 +5,7 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "mockhost":"http://10.16.153.243:31006",
   "scripts": {
     "dev": "vite --config ./build/config.dev.js",
     "build": "vite build --config ./build/config.prod.js",
@@ -15,6 +16,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "css-color-function": "^1.3.3",
+    "echarts": "^5.1.2",
     "element-plus": "^1.0.2-beta.55",
     "js-cookie": "^2.2.1",
     "path-to-regexp": "^6.2.0",

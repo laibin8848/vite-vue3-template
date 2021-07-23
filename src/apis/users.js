@@ -6,8 +6,8 @@ export const getUserList = () => {
         reslove({
           code: 200,
           results: [
-            { userName: '小明', roleName: '超级管理员', state: '正常' },
-            { userName: '小红', roleName: '管理员', state: '冻结' }
+            { userName: '小明', roleName: '超级管理员', state: '正常', test: 'test' },
+            { userName: '小红', roleName: '管理员', state: '冻结', test: 'test' }
           ],
           total: 2
         })

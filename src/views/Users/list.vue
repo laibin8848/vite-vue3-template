@@ -7,7 +7,7 @@
       </el-col>
     </el-row>
     <br />
-    <el-table v-loading="pageParams.loading" :data="pageDatas" class="table">
+    <el-table border v-loading="pageParams.loading" :data="pageDatas" class="table">
       <el-table-column prop="userName" label="用户名" align="center"></el-table-column>
       <el-table-column prop="roleName" label="角色名称" align="center"></el-table-column>
       <el-table-column prop="state" label="角色状态" align="center"></el-table-column>

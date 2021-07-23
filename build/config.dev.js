@@ -1,5 +1,6 @@
 import { defineConfig, mergeConfig } from 'vite'
 import baseConfig from './config.base'
+import { mockhost } from '../package.json'
 
 export default defineConfig(mergeConfig(baseConfig, {
   server: {
@@ -7,11 +8,11 @@ export default defineConfig(mergeConfig(baseConfig, {
     open: true,
     cors: true,
     proxy: {
-      '/api_proxy': {
-        target: 'http://localhost:9000/',
+      '/system': {
+        target: mockhost || '',
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace('/api_proxy', '')
+        // rewrite: (path) => path.replace('/system', '')
       }
     },
   }
