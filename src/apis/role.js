@@ -1,10 +1,10 @@
 import request from "@/utils/request";
 
-export const getUserList = (data) => {
-  return request.post('/system/user/listByPage', data)
+export const getRoleList = (data) => {
+  return request.post('/system/role/listByPage', data)
 }
 
-export const delUser = (row) => {
+export const delRole = (row) => {
   return new Promise(reslove => {
       setTimeout(()=> {
         reslove({

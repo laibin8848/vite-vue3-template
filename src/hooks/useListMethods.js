@@ -19,11 +19,15 @@ export default function useListMethods(options) {
       console.error('请定义一个函数用于获取列表数据')
     }
     pageParams.value.loading = true
-    options.listLoader().then(res => {
+    options.listLoader({
+      pageNo: pageParams.value.page,
+      pageSize: pageParams.value.limit
+    }).then(res => {
+      console.log('res', res)
       pageParams.value.loading = false
       if(res.code == 200) {
-        pageDatas.value = res.results
-        pageParams.value.total = res.total
+        pageDatas.value = res.result.records
+        pageParams.value.total = res.result.total
       }
     })
   }

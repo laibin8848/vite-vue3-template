@@ -31,8 +31,7 @@ service.interceptors.response.use(
       }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
-      ElMessage.error(response.message)
-      return response.data
+      return res
     }
   },
   (error) => {

@@ -8,9 +8,10 @@
     </el-row>
     <br />
     <el-table border v-loading="pageParams.loading" :data="pageDatas" class="table">
-      <el-table-column prop="userName" label="用户名" align="center"></el-table-column>
-      <el-table-column prop="roleName" label="角色名称" align="center"></el-table-column>
-      <el-table-column prop="state" label="角色状态" align="center"></el-table-column>
+      <el-table-column prop="roleName" label="角色名" align="center"></el-table-column>
+      <el-table-column prop="roleCode" label="角色标识" align="center"></el-table-column>
+      <el-table-column prop="createTime" label="创建时间" align="center"></el-table-column>
+      <el-table-column prop="createBy" label="创建人" align="center"></el-table-column>
       <el-table-column label="操作" align="center">
         <template #default="scope">
             <el-button type="text">编辑</el-button>
@@ -35,15 +36,15 @@
 <script>
   import { defineComponent } from 'vue';
   import useListMethods from '@/hooks/useListMethods';
-  import { getUserList, delUser } from '@/apis/users';
+  import { getRoleList, delRole } from '@/apis/role';
 
   export default defineComponent({
-    name: 'user-list',
+    name: 'role-list',
     setup() {
       return {
         ...useListMethods({
-          listLoader: getUserList,
-          delFun: delUser
+          listLoader: getRoleList,
+          delFun: delRole
         })
       }
     }

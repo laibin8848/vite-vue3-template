@@ -8,9 +8,14 @@
     </el-row>
     <br />
     <el-table border v-loading="pageParams.loading" :data="pageDatas" class="table">
-      <el-table-column prop="userName" label="用户名" align="center"></el-table-column>
-      <el-table-column prop="roleName" label="角色名称" align="center"></el-table-column>
-      <el-table-column prop="state" label="角色状态" align="center"></el-table-column>
+      <el-table-column prop="username" label="用户名" align="center"></el-table-column>
+      <el-table-column prop="email" label="邮箱" align="center"></el-table-column>
+      <el-table-column prop="createTime" label="创建时间" align="center"></el-table-column>
+      <el-table-column prop="createBy" label="创建人" align="center"></el-table-column>
+      <el-table-column prop="mobile" label="手机" align="center"></el-table-column>
+      <el-table-column prop="sex_dictText" label="性别" align="center"></el-table-column>
+      <el-table-column prop="status_dictText" label="状态" align="center"></el-table-column>
+      <el-table-column prop="realname" label="真实姓名" align="center"></el-table-column>
       <el-table-column label="操作" align="center">
         <template #default="scope">
             <el-button type="text">编辑</el-button>
