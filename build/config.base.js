@@ -3,7 +3,7 @@ import legacy from '@vitejs/plugin-legacy'
 import { resolve } from 'path';
 import styleImport from 'vite-plugin-style-import'
 import { injectHtml } from 'vite-plugin-html'
-import { name } from '../package.json'
+import { description } from '../package.json'
 
 export default {
   base: './',
@@ -27,7 +27,7 @@ export default {
      }),
      injectHtml({
        injectData: {
-         title: name
+         title: description
        },
      })
   ],

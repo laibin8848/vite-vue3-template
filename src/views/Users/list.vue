@@ -45,6 +45,7 @@
   export default defineComponent({
     name: 'user-list',
     setup() {
+      console.log('user cal')
       return {
         ...useListMethods({
           listLoader: getUserList,

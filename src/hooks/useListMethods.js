@@ -23,7 +23,6 @@ export default function useListMethods(options) {
       pageNo: pageParams.value.page,
       pageSize: pageParams.value.limit
     }).then(res => {
-      console.log('res', res)
       pageParams.value.loading = false
       if(res.code == 200) {
         pageDatas.value = res.result.records

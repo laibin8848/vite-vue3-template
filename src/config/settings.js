@@ -1,7 +1,7 @@
-import { name } from '../../package.json'
+import { description } from '../../package.json'
 
 const defaultSetting = {
-  title: name,
+  title: description,
   /**
    * @type {boolean} true | false
    * @description whether fix the header

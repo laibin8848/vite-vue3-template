@@ -2,21 +2,21 @@
   <section class="app-main">
     <el-tabs id="Tabs" v-model="currentIndex" type="card" closable @tab-click="clickTab" @tab-remove="removeTab">
       <el-tab-pane v-for="item in tabsOption" :key="item.route" :closable="item.route !== '/home'" :label="item.title" :name="item.route">
-        <router-view v-if="$route.meta.keepAlive" v-slot="{ Component }">
-          <transition name="fade" mode="out-in">
-            <component :is="Component" />
-          </transition>
-        </router-view>
-
-        <router-view v-if="!$route.meta.keepAlive" v-slot="{ Component }">
-          <transition name="fade" mode="out-in">
-            <keep-alive>
-              <component :is="Component" />
-            </keep-alive>
-          </transition>
-        </router-view>
       </el-tab-pane>
     </el-tabs>
+    <router-view v-if="$route.meta.keepAlive" v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </transition>
+    </router-view>
+
+    <router-view v-if="!$route.meta.keepAlive" v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </section>
 </template>
 <script>
@@ -30,7 +30,7 @@
       // store 中获取当前路由以及所有的路由对象；
       const store = useStore()
       const tabsOption = computed(() => store.getters['tabModule/getTabsOption'])
-      console.log('tabsOption.value is ', tabsOption.value)
+
       const currentIndex = computed(() => store.getters['tabModule/getCurrentIndex'])
       const router = useRouter()
       // mothods
