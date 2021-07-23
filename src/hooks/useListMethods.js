@@ -59,7 +59,7 @@ export default function useListMethods(options) {
           type: 'success',
           message: '删除成功'
         }).then(
-          ()=> fetchData()
+          fetchData()
         )
       })
     })

@@ -2,7 +2,7 @@
   <div class="global-tab-con">
     <el-row>
       <el-col :span="8" align="left">
-        <el-button type="primary" icon="el-icon-plus" size="small">新增</el-button>
+        <el-button type="primary" icon="el-icon-plus" size="small" @click="formVisible = true">新增</el-button>
         <el-button type="success" icon="el-icon-refresh" size="small" @click="fetchData">刷新</el-button>
       </el-col>
     </el-row>
@@ -18,7 +18,6 @@
       <el-table-column prop="realname" label="真实姓名" align="center"></el-table-column>
       <el-table-column label="操作" align="center">
         <template #default="scope">
-            <el-button type="text">编辑</el-button>
             <el-button type="text" @click="onRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -35,22 +34,67 @@
         @size-change="onSizeChange">
       </el-pagination>
     </div>
+
+    <el-dialog title="添加用户" v-model="formVisible">
+      <el-form :model="configForm">
+        <el-form-item label="用户名" label-width="120px">
+          <el-input v-model="configForm.username" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" label-width="120px">
+          <el-input v-model="configForm.password" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" label-width="120px">
+          <el-input v-model="configForm.email" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="手机" label-width="120px">
+          <el-input v-model="configForm.mobile" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="formVisible = false">取 消</el-button>
+          <el-button type="primary" @click="onFormCommit">保 存</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 <script>
-  import { defineComponent } from 'vue';
+  import { defineComponent, reactive, ref } from 'vue';
   import useListMethods from '@/hooks/useListMethods';
-  import { getUserList, delUser } from '@/apis/users';
+  import { getUserList, delUser, addUser } from '@/apis/users';
+  import { ElMessage } from 'element-plus';
 
   export default defineComponent({
     name: 'user-list',
     setup() {
-      console.log('user cal')
-      return {
-        ...useListMethods({
-          listLoader: getUserList,
-          delFun: delUser
+      const formVisible = ref(false)
+      const configForm = reactive({
+        username: '',
+        email: '',
+        mobile: '',
+        password: ''
+      })
+      const hooks = useListMethods({
+        listLoader: getUserList,
+        delFun: delUser
+      })
+
+      const onFormCommit = () => {
+        addUser(configForm).then(res=> {
+          if(res.code == 200) {
+            ElMessage.success('添加用户操作成功！')
+            formVisible.value = false
+            hooks.fetchData()
+          }
         })
+      }
+
+      return {
+        ...hooks,
+        formVisible,
+        configForm,
+        onFormCommit
       }
     }
   })

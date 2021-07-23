@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { ElLoading, ElMessage } from 'element-plus'
 
-let loadingInstance = null
+// let loadingInstance = null
 
 const service = axios.create({
   baseURL: '',
@@ -12,7 +12,7 @@ const service = axios.create({
 // Request interceptors
 service.interceptors.request.use(
   (config) => {
-    loadingInstance = ElLoading.service({})
+    // loadingInstance = ElLoading.service({})
     return config
   },
   (error) => {
@@ -22,14 +22,14 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   (response) => {
-    loadingInstance.close()
+    // loadingInstance.close()
     const res = response.data
     if (res.code !== 200) {
       if(res.code == 401) {
         //redirect to login
         return
       }
-      return Promise.reject(new Error(res.message || 'Error'))
+      ElMessage.error(res.message)
     } else {
       return res
     }

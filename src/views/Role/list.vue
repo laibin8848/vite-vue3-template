@@ -2,7 +2,7 @@
   <div class="global-tab-con">
     <el-row>
       <el-col :span="8" align="left">
-        <el-button type="primary" icon="el-icon-plus" size="small">新增</el-button>
+        <el-button type="primary" icon="el-icon-plus" size="small" @click="formVisible = true">新增</el-button>
         <el-button type="success" icon="el-icon-refresh" size="small" @click="fetchData">刷新</el-button>
       </el-col>
     </el-row>
@@ -31,21 +31,58 @@
         @size-change="onSizeChange">
       </el-pagination>
     </div>
+
+    <el-dialog title="添加用户" v-model="formVisible">
+      <el-form :model="configForm">
+        <el-form-item label="角色名" label-width="120px">
+          <el-input v-model="configForm.roleName" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="角色标识" label-width="120px">
+          <el-input v-model="configForm.roleCode" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="formVisible = false">取 消</el-button>
+          <el-button type="primary" @click="onFormCommit">保 存</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 <script>
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref, reactive } from 'vue';
   import useListMethods from '@/hooks/useListMethods';
-  import { getRoleList, delRole } from '@/apis/role';
+  import { getRoleList, delRole, addRole } from '@/apis/role';
+  import { ElMessage } from 'element-plus';
 
   export default defineComponent({
     name: 'role-list',
     setup() {
-      return {
-        ...useListMethods({
-          listLoader: getRoleList,
-          delFun: delRole
+      const formVisible = ref(false)
+      const configForm = reactive({
+        roleName: '',
+        roleCode: ''
+      })
+      const hooks = useListMethods({
+        listLoader: getRoleList,
+        delFun: delRole
+      })
+
+      const onFormCommit = () => {
+        addRole(configForm).then(res=> {
+          if(res.code == 200) {
+            ElMessage.success('添加用户操作成功！')
+            formVisible.value = false
+            hooks.fetchData()
+          }
         })
+      }
+      return {
+        ...hooks,
+        onFormCommit,
+        formVisible,
+        configForm
       }
     }
   })

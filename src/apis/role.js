@@ -5,11 +5,9 @@ export const getRoleList = (data) => {
 }
 
 export const delRole = (row) => {
-  return new Promise(reslove => {
-      setTimeout(()=> {
-        reslove({
-          code: 200
-        })
-      }, 1000)
-  })
+  return request.get(`/system/role/delete/${row.id}`)
+}
+
+export const addRole = (data) => {
+  return request.post('/system/role/save', data)
 }

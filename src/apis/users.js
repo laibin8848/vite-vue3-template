@@ -5,11 +5,9 @@ export const getUserList = (data) => {
 }
 
 export const delUser = (row) => {
-  return new Promise(reslove => {
-      setTimeout(()=> {
-        reslove({
-          code: 200
-        })
-      }, 1000)
-  })
+  return request.get(`/system/user/delete/${row.id}`)
+}
+
+export const addUser = (data) => {
+  return request.post('/system/user/save', data)
 }
