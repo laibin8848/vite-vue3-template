@@ -11,7 +11,7 @@
     "build": "vite build --config ./build/config.prod.js",
     "lint": "eslint --ext .vue,.js ./src",
     "serve": "vite preview",
-    "postinstall": "npm run dev"
+    "postinstall": "node node_modules/esbuild/install.js && npm run dev"
   },
   "dependencies": {
     "axios": "^0.21.1",
