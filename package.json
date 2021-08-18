@@ -5,10 +5,11 @@
   "author": "",
   "license": "ISC",
   "description": "后台管理系统",
-  "mockhost":"http://10.16.153.243:31006",
+  "mockhost": "http://10.16.153.243:31006",
   "scripts": {
     "dev": "vite --config ./build/config.dev.js",
-    "build": "vite build --config ./build/config.prod.js",
+    "build": "vue-cli-service build --report",
+    "build-vite": "vite build --config ./build/config.prod.js",
     "lint": "eslint --ext .vue,.js ./src",
     "serve": "vite preview",
     "postinstall": "node node_modules/esbuild/install.js && npm run dev"
@@ -20,21 +21,27 @@
     "element-plus": "^1.0.2-beta.55",
     "js-cookie": "^2.2.1",
     "path-to-regexp": "^6.2.0",
-    "vue": "^3.0.5",
     "vue-router": "^4.0.10",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.0",
+    "vue": "^3.1.2"
   },
   "devDependencies": {
     "@vitejs/plugin-legacy": "^1.4.4",
     "@vitejs/plugin-vue": "^1.2.5",
-    "@vue/compiler-sfc": "^3.0.5",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.1.2",
     "eslint": "^7.30.0",
     "eslint-plugin-vue": "^7.13.0",
+    "html-webpack-plugin": "^5.3.2",
     "loadjs": "^4.2.0",
     "sass": "^1.32.12",
+    "script-ext-html-webpack-plugin": "^2.1.5",
     "scss": "^0.2.4",
     "vite": "^2.4.2",
     "vite-plugin-html": "^2.0.7",
-    "vite-plugin-style-import": "^1.0.1"
+    "vite-plugin-style-import": "^1.0.1",
+    "vue-svg-loader": "^0.16.0",
+    "vue-template-compiler": "^2.6.14",
+    "sass-loader": "^8.0.2"
   }
 }
