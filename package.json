@@ -5,7 +5,7 @@
   "author": "",
   "license": "ISC",
   "description": "后台管理系统",
-  "mockhost": "http://10.16.153.243:31006",
+  "mockhost": "http://10.16.153.243:31026",
   "scripts": {
     "dev": "vite --config ./build/config.dev.js",
     "build": "vue-cli-service build --report",

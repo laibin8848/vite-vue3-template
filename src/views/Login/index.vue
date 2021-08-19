@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="login-container">
-      <div class="login-left">
+      <!-- <div class="login-left">
         <div class="top">
           <div class="title">
             <span>欢迎您的到来</span>
@@ -19,7 +19,7 @@
             <img class="vueLogo" :src="vueLogo" />
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="login-right">
         <Login />
       </div>

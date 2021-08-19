@@ -47,9 +47,9 @@
             state.loading = true
             const res = await doLogin(state.loginForm)
             state.loading = false
-            if (res.data.accessToken) {
+            if (res.result.token) {
               sessionStorage.setItem('auth', 'true')
-              sessionStorage.setItem('accessToken', res.data.accessToken)
+              sessionStorage.setItem('accessToken', res.result.token)
               if (route.query.redirect) {
                 const path = route.query.redirect
                 router.push({ path })
