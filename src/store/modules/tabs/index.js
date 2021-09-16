@@ -1,8 +1,8 @@
 const tabModule = {
   namespaced: true,
   state: {
-    tabsOption:[{route:'/home',title:'信息汇总',name: 'home',}],
-    currentIndex:'/home',
+    tabsOption:[],
+    currentIndex:'/',
     breadcrumbList:[]
   },
   mutations: {
@@ -18,7 +18,7 @@ const tabModule = {
     },
     CLEAR_TAB: (state) => {
         // 初始化tab
-        state.tabsOption=[{route:'/home',title:'信息汇总',name:'home'}];
+        state.tabsOption=[];
     },
   },
   actions: {

@@ -2,43 +2,55 @@ import axios from 'axios'
 import { ElLoading, ElMessage } from 'element-plus'
 
 // let loadingInstance = null
-
 const service = axios.create({
-  baseURL: process.env.NODE_ENV == 'development' ? '' : 'https://www.fastmock.site/mock/ffa301b26eb93d926172ac233be9425c',
-  timeout: 5000,
-  withCredentials: true
+    baseURL: '',//import.meta.env.MODE == 'production' ? 'http://10.16.153.37:30329/unilever' : '',
+    timeout: 50000,
+    withCredentials: true
 })
 
 // Request interceptors
 service.interceptors.request.use(
-  (config) => {
-    // loadingInstance = ElLoading.service({})
-    config.headers['x-access-token'] = sessionStorage.getItem('accessToken')
-    return config
-  },
-  (error) => {
-    Promise.reject(error)
-  }
+    (config) => {
+      // loadingInstance = ElLoading.service({})
+      const loginInfo = JSON.parse(sessionStorage.getItem('loginInfo'))
+      let token = '';
+      if (loginInfo && loginInfo.token) {
+          token = loginInfo.token;
+      }
+      config.headers['x-access-token'] = token;
+      if(config.uploadFile) {
+        config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+      }
+      return config
+    },
+    (error) => {
+        Promise.reject(error)
+    }
 )
 
 service.interceptors.response.use(
-  (response) => {
-    // loadingInstance.close()
-    const res = response.data
-    if (res.code !== 'E000') {
-      if(res.code == 401) {
-        //redirect to login
-        return
-      }
-      ElMessage.error(res.message)
-    } else {
-      return res
+    (response) => {
+        // loadingInstance.close()
+        const res = response.data
+        if (res.code !== 200) {
+            if (res.code == 'E503') {
+                //redirect to login
+                sessionStorage.removeItem('auth');
+                // sessionStorage.removeItem('accessToken');
+                window.location.replace('#login');
+                return
+            } else if (res.code == 'E401') {
+                //令牌过期
+                sessionStorage.removeItem('auth')
+                window.location.replace('#login')
+                return
+            }
+            // ElMessage.error(res.message)
+            return res;
+        } else {
+            return res
+        }
     }
-  },
-  (error) => {
-    ElMessage.error('出错了!')
-    return Promise.reject(error)
-  }
 )
 
 export default service

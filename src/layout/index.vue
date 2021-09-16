@@ -3,10 +3,10 @@
     <!--backtop-->
     <el-backtop target=".app-wrapper" :visibility-height="100"></el-backtop>
 
-    <Sidebar class="sidebar-container" />
+    <Sidebar class="sidebar-container phoneHidden" />
     <div class="main-container">
       <!--Navbar-->
-      <div :class="{ 'fixed-header': fixedHeader }">
+      <div :class="{ 'fixed-header': fixedHeader }" class="phoneHidden">
         <navbar :primary="primary" />
       </div>
       <!--AppMain-->

@@ -9,22 +9,26 @@
     <br />
     <el-table
       v-loading="pageParams.loading"
-      :data="dataList"
+      :data="pageDatas"
       class="table"
       row-key="id"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+      border
     >
-      <el-table-column prop="menuName" label="菜单名" align="center"></el-table-column>
-      <el-table-column prop="isDisplay" label="是否显示" align="center">
+      <el-table-column prop="menuName" label="名称" align="center"></el-table-column>
+      <el-table-column prop="parentName" label="上级菜单" align="center"></el-table-column>
+      <el-table-column prop="icon" label="图标" align="center">
         <template #default="scope">
-          <el-switch
-            v-model="scope.row.isDisplay"
-            disabled
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-          ></el-switch>
+          <i :class="scope.row.icon"></i>
         </template>
       </el-table-column>
+      <el-table-column prop="type_dictText" label="类型" align="center">
+        <template #default="scope">
+          <el-tag v-if="scope.row.type_dictText">{{scope.row.type_dictText}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="sortOrder" label="序号" align="center"></el-table-column>
+      <el-table-column prop="url" label="URL" align="center"></el-table-column>
       <el-table-column label="操作" align="center">
         <template #default="scope">
           <el-button type="text" @click="addOrEdit('edit',scope.row)">编辑</el-button>
@@ -45,91 +49,122 @@
       ></el-pagination>
     </div>
 
-    <edit-dialog v-if="showDialog" :showDialog="showDialog" @hide="hide" :data="data"></edit-dialog>
+    <edit-dialog
+      v-if="showDialog"
+      :showDialog="showDialog"
+      :data="data"
+      @confirm="confirm"
+      @cancel="cancel"
+    ></edit-dialog>
   </div>
 </template>
 <script>
-import { defineComponent, ref, computed, reactive, toRefs } from 'vue'
+import { defineComponent, ref, computed, reactive, toRefs, watch } from 'vue'
 import useListMethods from '@/hooks/useListMethods'
 import { saveMenu, delMenu, getMenuList } from '@/apis/menu'
-import { dialog } from '@/components/base'
 import { store } from '@/store/index'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 export default defineComponent({
   name: 'user-list',
-  components: {
-    [dialog.name]: dialog
-  },
   setup() {
+    let showDialog = ref(false)
+
     const addOrEdit = (type, item) => {
-      store.commit('permissionModule/setShowDialog', true)
+      showDialog.value = true
       if (type === 'add') {
-        state.data = { id: '', menuName: '', isDisplay: false, submenu: [{ id: '', menuName: '' }] }
+        state.data = {
+          id: '',
+          isDelete: '',
+          createBy: '',
+          type: 0,
+          type_dictText: '',
+          menuName: '',
+          menuCode: '',
+          buttonName: '',
+          parentId: '',
+          url: '',
+          authorizationId: '',
+          sortOrder: '',
+          icon: 'el-icon-refresh',
+          updateBy: ''
+        }
       } else {
-        item.isFolder = item.type === 0
         state.data = item
       }
     }
 
-    const hide = (type, data) => {
-      store.commit('permissionModule/setShowDialog', false)
-      if (type === 'confirm') {
-        const oldData = store.state.permissionModule.menuList
-        if (data) {
-          saveMenu([{...data}]).then(res => {
-            if (res.status === 200) {
-              if (data.children && data.children.length) {
-                saveMenu(data.children).then(res => {
-                  if (res.status === 200) {
-                    ElMessage({
-                      type: 'success',
-                      message: '保存成功'
-                    })
-                  }
-                })
-              } else {
-                ElMessage({
-                  type: 'success',
-                  message: '保存成功'
-                })
-              }
-            }
-          })
-          // if(!data.id){
-          //   let id = store.state.permissionModule.menuList.length+1;
-          //   data.id = id;
-          //   oldData.push(data);
-          // }
-          // for(let i = 0; i < oldData.length; i++){
-          //   if(oldData[i].id==data.id){
-          //     oldData[i] = data;
-          //     break;
-          //   }
-          // }
-          store.commit('permissionModule/setMenuList', oldData)
+    const confirm = data => {
+      showDialog.value = false
+      saveMenu(data)
+        .then(e => {
+          if (e.code == 200) {
+            hooks.fetchData()
+          } else {
+            ElMessage.error(e.message)
+          }
+        })
+        .catch(error => {
+          ElMessage.error(error.message)
+        })
+    }
+
+    const cancel = data => {
+      showDialog.value = false
+    }
+
+    const hooks = useListMethods({
+      listLoader: getMenuList,
+      delFun: delMenu
+    })
+
+    const setMsg = item => {
+      if (item && item.length) {
+        for (let i = 0; i < item.length; i++) {
+          if (item[i] && item[i].children && item[i].children.length) {
+            item[i].delMsg = '此操作会同时删除下面的子目录，是否继续？'
+            setMsg(item[i].children)
+          }
         }
       }
     }
 
+    const getItemParentName = item => {
+      if (item && item.length) {
+        let id = ''
+        let name = ''
+        for (let i = 0; i < item.length; i++) {
+          if (item[i] && item[i].children && item[i].children.length) {
+            id = item[i].id;
+            name = item[i].menuName;
+
+            for (let j = 0; j < item[i].children.length; j++) {
+              if (item[i].children[j].parentId === id) {
+                item[i].children[j].parentName = name;
+              }
+              getItemParentName(item[i].children);
+            }
+          }
+        }
+      }
+    }
+
+    watch(hooks.pageDatas, item => {
+      // console.log(item)
+      getItemParentName(item);
+      setMsg(item)
+    })
+
     const state = reactive({
-      showDialog: computed(() => store.state.permissionModule.showDialog),
+      showDialog,
       data: {},
-      ...useListMethods({
-        listLoader: getMenuList,
-        delFun: delMenu
-      }),
-      dataList: computed(() => store.state.permissionModule.menuList),
+      getMenuList,
       addOrEdit,
-      hide
+      confirm,
+      cancel,
+      ...hooks
     })
     return toRefs(state)
   }
 })
 </script>
-
-<style lang="scss">
-// .el-table__row--level-1{
-//   background:#eee!important;
-// }
-</style>

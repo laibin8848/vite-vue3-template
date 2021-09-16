@@ -12,6 +12,7 @@ export default defineConfig(mergeConfig(baseConfig, {
     minifyHtml()
   ],
   build:{
+    chunkSizeWarningLimit: 2000,
     emptyOutDir: true,
     // lib: {
       // formats: ['es', 'umd', 'iife'],

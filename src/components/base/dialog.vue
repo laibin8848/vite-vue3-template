@@ -1,99 +1,84 @@
 
 <template>
-  <el-dialog title="菜单" v-model="showDialog">
-    <el-form :model="menuItem">
-      <el-form-item label="菜单名" label-width="20%">
+  <el-dialog title="菜单" v-model="showDialog" :before-close="cancel">
+    <el-form :model="menuItem" @click="closeTree" :rules="rules">
+      <el-form-item label="类型" label-width="20%">
+        <div style="width:80%">
+          <el-radio-group v-model="menuItem.type">
+            <el-radio :label="0">目录</el-radio>
+            <el-radio :label="1">菜单</el-radio>
+            <!-- <el-radio :label="2">按钮</el-radio> -->
+          </el-radio-group>
+        </div>
+      </el-form-item>
+
+      <el-form-item v-if="menuItem.type===0" label="目录名称" label-width="20%" prop="menuName">
         <div style="width:80%">
           <el-input v-model="menuItem.menuName" autocomplete="off"></el-input>
         </div>
       </el-form-item>
-      <el-form-item label="ICON" label-width="20%">
+
+      <el-form-item v-if="menuItem.type===1" label="菜单名" label-width="20%" prop="menuName">
         <div style="width:80%">
-          <el-input v-model="menuItem.icon" autocomplete="off"></el-input>
+          <el-input v-model="menuItem.menuName" autocomplete="off"></el-input>
         </div>
       </el-form-item>
-      <el-form-item v-if="!menuItem.isFolder"
-        label="URL"
-        label-width="20%"
-      >
+
+      <el-form-item v-if="menuItem.type===2" label="按钮名称" label-width="20%" prop="menuName">
+        <div style="width:80%">
+          <el-input v-model="menuItem.buttonName" autocomplete="off"></el-input>
+        </div>
+      </el-form-item>
+
+      <el-form-item label="上级菜单" label-width="20%" @click.stop prop="superiorMenu">
+        <div style="width:80%;position:relative;">
+          <el-input
+            v-model="menuItem.superiorMenu"
+            autocomplete="off"
+            @focus.prevent.stop="superiorMenuChange"
+          ></el-input>
+          <el-tree
+            v-show="superiorMenuFocus"
+            style="position:absolute;top:30;left:0;zIndex:100;background:#eee;padding:10px;minWidth:150px"
+            :data="treeData"
+            :props="{
+              children: 'children',
+              label: 'menuName'
+            }"
+            @node-click="handleNodeClick"
+          ></el-tree>
+        </div>
+      </el-form-item>
+
+      <el-form-item v-if="menuItem.type===1" label="菜单路由" label-width="20%" prop="superiorMenu">
         <div style="width:80%">
           <el-input v-model="menuItem.url" autocomplete="off"></el-input>
         </div>
       </el-form-item>
 
-      <el-row :gutter="20">
-        <el-col :span="10">
-          <div class="grid-content bg-purple">
-            <el-form-item label="是否为菜单" label-width="50%">
-              <div style="width:80%;textAlign:left">
-                <el-switch
-                  v-model="menuItem.isFolder"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949"
-                ></el-switch>
-              </div>
-            </el-form-item>
-          </div>
-        </el-col>
-        <el-col :span="10">
-          <div class="grid-content bg-purple">
-            <el-form-item label="是否显示" label-width="50%">
-              <div style="width:80%;textAlign:left">
-                <el-switch
-                  v-model="menuItem.isDisplay"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949"
-                ></el-switch>
-              </div>
-            </el-form-item>
-          </div>
-        </el-col>
-      </el-row>
-    </el-form>
-
-    <el-row :gutter="50" style="marginLeft:0" v-if="menuItem.isFolder">
-      <el-col :span="50">
-        <div class="grid-content bg-purple">
-          <el-button type="primary" icon="el-icon-plus" size="small" @click="addSubmenu()">新增子菜单</el-button>
+      <el-form-item v-if="menuItem.type===1 || menuItem.type===2" label="授权标识" label-width="20%">
+        <div style="width:80%">
+          <el-input v-model="menuItem.authorizationId" autocomplete="off"></el-input>
         </div>
-        <el-table :data="menuItem.children" style="width: 100%">
-          <el-table-column prop="menuName" label="Menu Name" width="180">
-            <template #default="scope">
-              <el-input v-model="scope.row.menuName" autocomplete="off"></el-input>
-            </template>
-          </el-table-column>
-          <el-table-column prop="url" label="URL">
-            <template #default="scope">
-              <el-input v-model="scope.row.url" autocomplete="off"></el-input>
-            </template>
-          </el-table-column>
-          <el-table-column label="icon" width="80">
-            <template #default="scope">
-              <el-input v-model="scope.row.icon" autocomplete="off"></el-input>
-            </template>
-          </el-table-column>
-          <el-table-column label="Display" width="80">
-            <template #default="scope">
-              <el-switch
-                v-model="scope.row.isDisplay"
-                active-color="#13ce66"
-                inactive-color="#ff4949"
-              ></el-switch>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" align="center" width="80">
-            <template #default="scope">
-              <el-button type="text" @click="delsubMenu(scope.row)">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-col>
-    </el-row>
+      </el-form-item>
+
+      <el-form-item v-if="menuItem.type===0 || menuItem.type===1" label="排序号" label-width="20%">
+        <div style="width:80%">
+          <el-input v-model="menuItem.sortOrder" autocomplete="off"></el-input>
+        </div>
+      </el-form-item>
+
+      <el-form-item v-if="menuItem.type===0 || menuItem.type===1" label="菜单图标" label-width="20%">
+        <div style="width:80%">
+          <el-input v-model="menuItem.icon" autocomplete="off"></el-input>
+        </div>
+      </el-form-item>
+    </el-form>
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="hide('cancel')">取 消</el-button>
-        <el-button type="primary" @click="hide('confirm')">确 定</el-button>
+        <el-button @click="cancel()">取 消</el-button>
+        <el-button type="primary" @click="confirm()">确 定</el-button>
       </span>
     </template>
   </el-dialog>
@@ -103,44 +88,70 @@
 import { defineComponent, ref, toRef, toRefs, watch, reactive, computed } from 'vue'
 import { store } from '@/store/index'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { getAllTree } from '@/apis/menu'
 export default defineComponent({
   name: 'edit-dialog',
+  emits: ['confirm','cancel'],
   props: {
     data: {
       type: Object,
       default: {}
+    },
+    showDialog: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, ctx) {
-    const menuItem = computed(() => props.data)
 
-    const hide = flag => {
-      ctx.emit('hide', flag, props.data)
+    const rules = {
+      menuName: [{ required: true, message: '请输入名称', trigger: 'blur' }],
+      superiorMenu: [{ required: true, message: '请选择上级菜单', trigger: 'blur' }],
+      url: [{ required: true, message: '请输入路由地址', trigger: 'blur' }],
     }
 
-    const addSubmenu = () => {
-      props.data.children.push({type:1,parentId:''});
-    }
-    const delsubMenu = row => {
-      ElMessageBox.confirm('是否删除?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        for (let i = props.data.children.length - 1; i >= 0; i--) {
-          if (props.data.children[i].id === row.id) {
-            props.data.children.splice(i, 1);
-            return
-          }
+    let superiorMenuFocus = ref(false)
+    let showDialog = ref(props.showDialog)
+
+    const treeData = ref([])
+
+    const menuItem = ref(JSON.parse(JSON.stringify(props.data)));
+
+    const superiorMenuChange = () => {
+      getAllTree().then(res => {
+        if (res.result && res.result.length) {
+          treeData.value = res.result
         }
       })
+      superiorMenuFocus.value = true
     }
+    const closeTree = () => {
+      superiorMenuFocus.value = false
+    }
+    const handleNodeClick = data => {
+      menuItem.value.superiorMenu = data.menuName
+      menuItem.value.parentId = data.id
+    }
+
+    const cancel = () => {
+      ctx.emit('cancel', menuItem.value)
+    }
+
+    const confirm = () => {
+      ctx.emit('confirm', menuItem.value)
+    }
+
     return reactive({
+      rules,
       menuItem,
-      showDialog: computed(() => store.state.permissionModule.showDialog),
-      hide,
-      addSubmenu,
-      delsubMenu
+      treeData,
+      superiorMenuFocus,
+      showDialog,
+      handleNodeClick,
+      superiorMenuChange,
+      closeTree,
+      cancel,
+      confirm
     })
   }
 })

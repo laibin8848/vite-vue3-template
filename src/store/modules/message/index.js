@@ -1,7 +1,7 @@
 const messageModule = {
   namespaced: true,
   state: {
-    messageNum:1
+    messageNum: 0
   },
   mutations: {
     UPDATE_MESSAGE: (state, payload) => {

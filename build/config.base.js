@@ -18,7 +18,10 @@ export default {
           name = name.slice(3)
           return `element-plus/packages/theme-chalk/src/${name}.scss`;
         },
-        resolveComponent: (name) => `element-plus/lib/${name}`,
+        resolveComponent: (name) => {
+          name = name.slice(3)
+          return `element-plus/lib/components/${name}`
+        },
       }]
     }),
     legacy({

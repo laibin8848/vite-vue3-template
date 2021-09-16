@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <el-header height="50px" >
+    <el-header height="50px">
       <yue-hamburger id="Hamburger" :is-active="opened" class="hamburger-container" @toggleClick="toggleSideBar" />
       <yue-bread-crumb class="breadcrumb-container" />
       <div class="right-menu">
@@ -12,9 +12,9 @@
               </el-button>
             </el-badge>
             <template #dropdown>
-              <el-dropdown-menu>
+              <!-- <el-dropdown-menu>
                 <el-dropdown-item command="a">这是一条测试消息</el-dropdown-item>
-              </el-dropdown-menu>
+              </el-dropdown-menu> -->
             </template>
           </el-dropdown>
         </div>
@@ -26,90 +26,71 @@
             <i v-show="fullScreen == true" class="el-icon-bottom-left" @click="toExitFullScreen()"></i>
           </el-tooltip>
         </el-button>
-        <el-dropdown class="avatar-container" trigger="hover">
-          <div class="avatar-wrapper">
-            <el-avatar :src="avatar"></el-avatar>
-            <div class="nickname">{{ nickname }}</div>
-          </div>
-          <template #dropdown>
-            <el-dropdown-menu class="user-dropdown">
-              <router-link to="/">
-                <el-dropdown-item>切到首页</el-dropdown-item>
-              </router-link>
-              <router-link to="/personal/personalSetting">
-                <el-dropdown-item>个人设置</el-dropdown-item>
-              </router-link>
-              <el-dropdown-item divided>
-                <span style="display: block" @click="logout">退出登录</span>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
+        <div>当前登录用户：{{ loginInfo.userInfo.username }}
+          <el-button @click="logout" type="text">退出</el-button>
+        </div>
       </div>
     </el-header>
   </div>
 </template>
 <script>
-  import { defineComponent, computed, ref } from 'vue'
-  import avatar from '@/assets/avatar-default.jpg'
-  import { useRouter } from 'vue-router'
-  import { toFullScreen, exitFullScreen } from '@/utils/screen'
-  import { useStore } from '@/store/index'
-  import { breadCrumb, hamburger } from '@/components/base'
+import { defineComponent, computed, ref } from 'vue'
+import avatar from '@/assets/avatar-default.jpg'
+import { useRouter } from 'vue-router'
+import { toFullScreen, exitFullScreen } from '@/utils/screen'
+import { useStore } from '@/store/index'
 
-  export default defineComponent({
-    name: 'Navbar',
-    props: {
-      primary: {
-        default: '#fff',
-        type: String
-      }
-    },
-    components: {
-      [breadCrumb.name]: breadCrumb,
-      [hamburger.name]: hamburger
-    },
-    setup() {
-      const router = useRouter()
-      const store = useStore()
-      const opened = computed(() => store.getters['appModule/getSidebarState'])
-      const nickname = ''//computed(() => JSON.parse(localStorage.getItem('userInfo')).userName || '')
-      const fullScreen = ref(false)
-      const messageNum = computed(() => store.getters['messageModule/getMessageNum'])
-      // methods
-      const toggleSideBar = () => {
-        console.log('into toggleSideBar')
-        store.dispatch('appModule/toggleSideBar')
-      }
-
-      const toShowFullScreen = () => {
-        toFullScreen()
-        fullScreen.value = true
-      }
-
-      const toExitFullScreen = () => {
-        exitFullScreen()
-        fullScreen.value = false
-      }
-      const logout = () => {
-        sessionStorage.removeItem('auth')
-        router.replace('/login')
-      }
-      return {
-        messageNum,
-        toShowFullScreen,
-        toExitFullScreen,
-        toFullScreen,
-        exitFullScreen,
-        fullScreen,
-        nickname,
-        avatar,
-        toggleSideBar,
-        opened,
-        logout
-      }
+export default defineComponent({
+  name: 'Navbar',
+  props: {
+    primary: {
+      default: '#fff',
+      type: String
     }
-  })
+  },
+  setup() {
+    const router = useRouter()
+    const store = useStore()
+    const opened = computed(() => store.getters['appModule/getSidebarState'])
+    const nickname = '' //computed(() => JSON.parse(localStorage.getItem('userInfo')).userName || '')
+    const fullScreen = ref(false)
+    const loginInfo = ref(JSON.parse(sessionStorage.getItem('loginInfo')))
+    const messageNum = computed(() => store.getters['messageModule/getMessageNum'])
+    // methods
+    const toggleSideBar = () => {
+      console.log('into toggleSideBar')
+      store.dispatch('appModule/toggleSideBar')
+    }
+
+    const toShowFullScreen = () => {
+      toFullScreen()
+      fullScreen.value = true
+    }
+
+    const toExitFullScreen = () => {
+      exitFullScreen()
+      fullScreen.value = false
+    }
+    const logout = () => {
+      sessionStorage.removeItem('auth')
+      router.replace('/login')
+    }
+    return {
+      messageNum,
+      toShowFullScreen,
+      toExitFullScreen,
+      toFullScreen,
+      exitFullScreen,
+      fullScreen,
+      nickname,
+      avatar,
+      toggleSideBar,
+      opened,
+      logout,
+      loginInfo
+    }
+  }
+})
 </script>
 <style lang="scss" scoped>
 .navbar {

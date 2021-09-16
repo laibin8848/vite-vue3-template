@@ -1,6 +1,5 @@
 <template>
-  <div id="app" class="aaa">
-    <corner-marker sign="dev"></corner-marker>
+  <div id="app">
     <router-view></router-view>
   </div>
 </template>
@@ -8,13 +7,9 @@
 <script>
 import { defineComponent } from 'vue'
 import { useStore } from '@/store/index'
-import {cornerMarker} from '@/components/base'
 
 export default defineComponent({
   name: 'App',
-  components: {
-      [cornerMarker.name]: cornerMarker
-  },
   setup() {
     const store = useStore()
 
@@ -24,7 +19,8 @@ export default defineComponent({
       store.commit('settingsModule/setTableHeight', height) // 设置tableHeight
     }
     resizeHeight()
-    return {}
+    return {
+    }
   }
 })
 </script>

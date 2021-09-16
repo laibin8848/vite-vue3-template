@@ -126,3 +126,31 @@ div:focus {
   text-align: right;
   margin-top: 20px;
 }
+.global-uploader-icon {
+  padding: 40px;
+  border: 1px #ccc dotted;
+  border-radius: 20px;
+}
+.el-dialog__header {
+  text-align: left;
+  background: #fafafa;
+  border-bottom: 1px #ccc solid;
+}
+.btn-prev .el-icon-arrow-left,
+.btn-next .el-icon-arrow-right {
+  margin-left: 10px;
+}
+.el-message-box__header {
+  background: #fafafa;
+  border-bottom: 1px #ccc solid;
+}
+.el-form-item__content {
+  text-align: left;
+}
+.image_show {
+  width: 150px;
+  height: 150px;
+  border: 1px #ccc solid;
+  padding: 12px;
+  overflow: hidden;
+}

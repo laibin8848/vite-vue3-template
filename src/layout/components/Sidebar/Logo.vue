@@ -14,7 +14,7 @@
 </template>
 <script>
   import { computed, defineComponent, reactive, toRefs } from 'vue'
-  import logo from '@/assets/logo.png'
+  import logo from '@/assets/logo.jpg'
   import { useStore } from '@/store/index'
 
   export default defineComponent({
@@ -53,7 +53,7 @@
   width: 100%;
   height: 50px;
   line-height: 50px;
-  background: #2b2f3a;
+  background: #81a4fc;
   text-align: center;
   overflow: hidden;
 

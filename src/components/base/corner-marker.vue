@@ -24,10 +24,11 @@ export default defineComponent({
   left: 0;
   background: green;
   color: #fff;
-  text-align: center;
+  text-align: left;
+  padding-left: 78px;
   width: 200px;
-  height: 50px;
-  line-height: 50px;
+  height: 35px;
+  line-height: 35px;
   transform: rotate(316deg);
   z-index: 100000;
   top: 1px;
