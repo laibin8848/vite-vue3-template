@@ -2,7 +2,7 @@
   <div class="container">
     <div class="login-container">
       <div class="login-right">
-        <h2 style="margin-bottom: 20px;">用户登录</h2>
+        <h2 style="padding-top: 20px;margin-bottom: 50px;color: #666;">用户登录</h2>
         <Login />
       </div>
     </div>
@@ -43,8 +43,16 @@ export default defineComponent({
   }
 }
 .container {
+  padding: 20px;
+  ::v-deep(.el-input__inner) {
+    border-radius: 0 !important;
+  }
+  ::v-deep(.el-button) {
+    border-radius: 0 !important;
+  }
   position: relative;
-  background-image: linear-gradient(160deg, #00CC9D 20%, #008cff 80%);
+  // background-image: linear-gradient(160deg, #00CC9D 20%, #008cff 80%);
+  background: #f5e6e6;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -53,14 +61,15 @@ export default defineComponent({
     top: 200px;
     animation:show-login 1s;
     -webkit-animation:show-login 1s;
-    height: 300px;
+    height: auto;
     flex-direction: row;
     display: flex;
     justify-content: space-evenly;
-    border-radius: 10px;
+    // border-radius: 10px;
     overflow: hidden;
     background-color: white;
-    box-shadow: 0 0 20px 5px rgba(34, 84, 142, 0.26);
+    // box-shadow: 0 0 20px 5px rgba(34, 84, 142, 0.26);
+    box-shadow: 0 0 10px rgb(61 61 61 / 25%);
     .login-left {
       width: 50%;
       padding: 47px 54px;
@@ -95,7 +104,7 @@ export default defineComponent({
       }
     }
     .login-right {
-      width: 400px;
+      width: 500px;
       display: flex;
       flex-direction: column;
       justify-content: center;

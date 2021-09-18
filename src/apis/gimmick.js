@@ -5,7 +5,7 @@ export const saveGimmick = (data) => {
 }
 
 export const getGimmickList = (data) => {
-    return request.post('/unilever/robot/problem-option-goods/firstLayer', data)
+    return request.post(`/unilever/robot/problem-option-goods/firstLayer?pageNo=${data.pageNo}&pageSize=${data.pageSize}`, data)
 }
 
 export const deleteGimmick = (id) => {

@@ -27,7 +27,7 @@
       </el-form-item>
       <el-form-item>
         <div class="btn-container">
-          <el-button :loading="loading" type="primary" style="width: 100%" @click="submitForm()">登录</el-button>
+          <el-button :loading="loading" type="primary" size="big" style="width: 100%" @click="submitForm()">登录</el-button>
         </div>
       </el-form-item>
     </el-form>

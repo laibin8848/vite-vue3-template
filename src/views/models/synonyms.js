@@ -39,10 +39,7 @@ export default function synonymsModelForm() {
   }
 
   const synonymsFormValidateRules = {
-    code: [ { required: true, message: '请输入商品编码', trigger: 'blur' } ],
-    name: [ { required: true, message: '请输入商品名称', trigger: 'blur' } ],
-    description: [ { required: true, message: '请输入商品描述', trigger: 'blur' } ],
-    picture: [ { required: true, message: '请上传商品图片', trigger: 'blur' } ]
+    name: [ { required: true, message: '请输入同义词名称', trigger: 'blur' } ]
   }
 
   const synonymsFormVisible = ref(false)

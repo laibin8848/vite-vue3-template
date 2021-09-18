@@ -54,10 +54,10 @@
             <el-col :span="24" align="left">
               <el-form :inline="true" class="search-form" label-width="60px" label-position="left" :model="searchForm">
                 <el-form-item label="名称:">
-                  <el-input size="small" placeholder="请输入字典选项名称" suffix-icon="el-icon-search" v-model="searchForm.dictName"></el-input>
+                  <el-input size="small" placeholder="请输入字典名称" suffix-icon="el-icon-search" v-model="searchForm.dictName"></el-input>
                 </el-form-item>
                 <el-form-item label="数据值:" style="margin-left: 20px;">
-                  <el-input size="small" placeholder="请输入字典选项数据值" suffix-icon="el-icon-search" v-model="searchForm.dictCode"></el-input>
+                  <el-input size="small" placeholder="请输入字典关键词数据值" suffix-icon="el-icon-search" v-model="searchForm.dictCode"></el-input>
                 </el-form-item>
                 <el-form-item style="margin-left: 20px;">
                   <el-button size="small" type="primary" @click="onSubmitItem">查询</el-button>
@@ -113,7 +113,7 @@
         </span>
       </template>
     </el-dialog>
-    <el-dialog title="字典选项" v-model="AddItemVisible">
+    <el-dialog title="字典关键词" v-model="AddItemVisible">
       <el-form :model="dicItemForm">
         <el-form-item label="名称" label-width="120px">
           <el-input v-model="dicItemForm.itemName" autocomplete="off"></el-input>

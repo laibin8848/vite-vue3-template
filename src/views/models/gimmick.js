@@ -12,16 +12,21 @@ export default function gimmickModelForm() {
 
   const gimmickModel = ref({
     id: '',
+    name: '',
     content: '',
     parentId: '',
     instanceId: '',
     remark: '',
-    type: ''//类型（1:问题,2:选项,3:商品）
+    type: ''//类型（1:问题,2:关键词,3:商品）
   })
 
-  const gimmickFormSave = (cb) => {
-    modelOnSaving.value = true
-    gimmickFormRef.value && gimmickFormRef.value.validate().then(() => {
+  const gimmickFormSave = async (cb) => {
+    let valide = true
+    if(gimmickFormRef.value) {
+      valide = await gimmickFormRef.value.validate()
+    }
+    if(valide) {
+      modelOnSaving.value = true
       saveGimmick(gimmickModel.value).then((res) => {
         modelOnSaving.value = false
         if (res.code == 'E000') {
@@ -32,12 +37,26 @@ export default function gimmickModelForm() {
           ElMessage.error(res.message)
         }
       })
-    }).catch(() => {
-      modelOnSaving.value = false
-    })
+    }
   }
 
   const gimmickFormValidateRules = {
+    name: [
+      {
+        validator: (rule, value, callback) => {
+          if(!gimmickModel.value.parentId) {
+            if(!value) {
+              callback(new Error('请输入问题名称'))
+            } else {
+              callback()
+            }
+          } else {
+            callback()
+          }
+        },
+        trigger: 'blur'
+      }
+    ],
     type: [ { required: true, message: '请选择类型', trigger: 'blur' } ],
     content: [{
       validator: (rule, value, callback) => {
@@ -65,19 +84,23 @@ export default function gimmickModelForm() {
   const gimmickFormShow = () => {
     optMode = 'add'
     gimmickFormVisible.value = true
-    gimmickModel.value = {}
+    gimmickModel.value = {
+      type: 1
+    }
   }
 
-  const gimmickTreeFormShow = (data = null) => {
+  const gimmickTreeFormShow = (data = null, selectDialog = true) => {
     optMode = 'edit'
-    gimmickFormVisible.value = true
-    switch(data.ptype) {
-      case 1:
-        data.type = 2;
-        break;
-      default:
-        data.type = 1;
-        break;
+    gimmickFormVisible.value = selectDialog
+    if(data.ptype) {
+      switch(data.ptype) {
+        case 1:
+          data.type = 2;
+          break;
+        default:
+          data.type = 1;
+          break;
+      }
     }
     gimmickModel.value = JSON.parse(JSON.stringify(data))
   }
@@ -96,6 +119,7 @@ export default function gimmickModelForm() {
   }
 
   const gimmickChangeInstanceId = (row) => {
+    gimmickModel.value.instanceName = row.name
     gimmickModel.value.instanceId = row.id
   }
 

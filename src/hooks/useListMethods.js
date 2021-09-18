@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 
 export default function useListMethods(options) {
@@ -17,6 +17,11 @@ export default function useListMethods(options) {
     const handleSelectionChange = (rows)=> {
       pageParams.value.selRows = rows
     }
+
+    const singleSelItem = computed(()=> {
+      const result = Array.isArray(pageParams.value.selRows) ? pageParams.value.selRows[0] || {} : pageParams.value.selRows
+      return result
+    })
 
     const pageDatas = ref([])
 
@@ -80,18 +85,18 @@ export default function useListMethods(options) {
     }
 
     const onRowDel = (row) => {
-        if (!options.delFun || typeof options.delFun !== 'function') {
-            console.error('请定义一个函数用于删除数据')
-        }
-        ElMessageBox.confirm(row.delMsg || '此操作将永久删除该数据, 是否继续?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-        }).then(() => {
-            options.delFun(row).then(() => {
-              ElMessageBox.alert('删除成功').then(()=> { fetchData() })
-            })
-        })
+      if (!options.delFun || typeof options.delFun !== 'function') {
+          console.error('请定义一个函数用于删除数据')
+      }
+      ElMessageBox.confirm(row.delMsg || '此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+      }).then(() => {
+          options.delFun(row).then(() => {
+            ElMessageBox.alert('删除成功').then(()=> { fetchData() })
+          })
+      })
     }
 
     return {
@@ -102,6 +107,7 @@ export default function useListMethods(options) {
         onRowDel,
         pageDatas,
         onRowDelBatch,
-        handleSelectionChange
+        handleSelectionChange,
+        singleSelItem
     }
 }

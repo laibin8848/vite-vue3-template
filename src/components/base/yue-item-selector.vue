@@ -1,10 +1,10 @@
 <template>
     <el-dialog>
       <template v-if="mode == 'keywords'">
-        <keywords ref="selectorRef" as-selector :multiple="multiple" :single="single" />
+        <keywords ref="selectorRef" :multiple="multiple" :single="single" />
       </template>
       <template v-else-if="mode == 'products'">
-        <products ref="selectorRef" as-selector :multiple="multiple" :single="single" />
+        <products ref="selectorRef" :multiple="multiple" :single="single" />
       </template>
       <template #footer>
         <span class="dialog-footer">
@@ -62,3 +62,8 @@
     }
   })
 </script>
+<style scoped>
+  ::v-deep(.el-table__body) {
+    cursor: pointer;
+  }
+</style>

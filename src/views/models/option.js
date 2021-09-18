@@ -20,7 +20,7 @@ export default function optionModelForm() {
       saveOption(optionModel.value).then((res) => {
         modelOnSaving.value = false
         if (res.code == 'E000') {
-          ElMessage.success(`${optMode == 'edit' ? '编辑': '添加'}选项操作成功！`)
+          ElMessage.success(`${optMode == 'edit' ? '编辑': '添加'}关键词操作成功！`)
           optionFormVisible.value = false
           cb && cb()
         } else {
@@ -33,8 +33,8 @@ export default function optionModelForm() {
   }
 
   const optionFormValidateRules = {
-    name: [ { required: true, message: '请输入选项名称', trigger: 'blur' } ],
-    remark: [ { required: true, message: '请输入选项描述', trigger: 'blur' } ]
+    name: [ { required: true, message: '请输入关键词名称', trigger: 'blur' } ],
+    // remark: [ { required: true, message: '请输入关键词描述', trigger: 'blur' } ]
   }
 
   const optionFormVisible = ref(false)

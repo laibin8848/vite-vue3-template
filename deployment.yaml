@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unilever-robot-system-front
+  labels:
+    app: unilever-robot-system-front
+  namespace: unilever-robot-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: unilever-robot-system-front
+  template:
+    metadata:
+      labels:
+        app: unilever-robot-system-front
+    spec:
+      containers:
+        - name: unilever-robot-system-front
+          image: ${CICD_IMAGE}:${CICD_GIT_COMMIT}.${CICD_GIT_BRANCH}.${CICD_EXECUTION_SEQUENCE}
+          ports:
+            - containerPort: 8000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: unilever-robot-system-front-nodeport
+  namespace: unilever-robot-dev
+spec:
+  selector:
+    app: unilever-robot-system-front
+  type: NodePort
+  ports:
+    - protocol: TCP
+      nodePort: 32189
+      port: 8000
+      targetPort: 8000

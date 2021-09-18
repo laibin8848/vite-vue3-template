@@ -70,8 +70,14 @@ div:focus {
 }
 
 // 表单的全局样式
+.mouse-pointer {
+  cursor: pointer;
+}
 .mb10 {
   margin-bottom: 10px;
+}
+.mr10 {
+  margin-right: 10px;
 }
 .ml10 {
   margin-left: 10px;
@@ -135,10 +141,8 @@ div:focus {
   text-align: left;
   background: #fafafa;
   border-bottom: 1px #ccc solid;
-}
-.btn-prev .el-icon-arrow-left,
-.btn-next .el-icon-arrow-right {
-  margin-left: 10px;
+  height: 50px;
+  border-radius: 6px;
 }
 .el-message-box__header {
   background: #fafafa;
@@ -153,4 +157,26 @@ div:focus {
   border: 1px #ccc solid;
   padding: 12px;
   overflow: hidden;
+}
+.el-overlay.is-message-box {
+  z-index: 99998 !important;
+}
+.el-overlay.is-message {
+  z-index: 99999 !important;
+}
+.el-dialog__body {
+  overflow: auto;
+}
+.tree_goods_info {
+  font-style: normal;
+  position: absolute;
+  padding-left: 10px;
+  top: 10px;
+  line-height: 22px;
+}
+.tree_icon {
+  font-size: 17px;
+}
+.el-dialog__body {
+  max-height: calc(100vh - 300px);
 }

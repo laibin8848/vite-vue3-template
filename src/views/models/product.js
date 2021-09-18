@@ -37,10 +37,10 @@ export default function productModelForm() {
   }
 
   const productFormValidateRules = {
-    code: [ { required: true, message: '请输入商品编码', trigger: 'blur' } ],
     name: [ { required: true, message: '请输入商品名称', trigger: 'blur' } ],
     description: [ { required: true, message: '请输入商品描述', trigger: 'blur' } ],
-    picture: [ { required: true, message: '请上传商品图片', trigger: 'blur' } ]
+    picture: [ { required: true, message: '请上传商品图片', trigger: 'blur' } ],
+    price: [ { type: 'number', message: '价格必须为数字值'} ]
   }
 
   const productFormVisible = ref(false)

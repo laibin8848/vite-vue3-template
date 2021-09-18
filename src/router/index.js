@@ -17,7 +17,7 @@ export const constantRoutes = [{
         component: layout,
         meta: {
             title: '系统用户管理',
-            icon: 'el-icon-s-order'
+            icon: 'el-icon-user'
         },
         children: [{
             path: '/users/list',
@@ -31,22 +31,22 @@ export const constantRoutes = [{
         path: '/keywords/index',
         component: layout,
         meta: {
-            title: '选项管理',
-            icon: 'el-icon-s-order'
+            title: '关键词管理',
+            icon: 'el-icon-chat-dot-square'
         },
         children: [
           {
             path: '/keywords/index',
             name: 'keywordsIndex',
             component: () => import ( /* webpackChunkName: "keywordsIndex" */ '@/views/keywords/index.vue'),
-            meta: { title: '选项管理',icon: 'el-icon-s-order' },
+            meta: { title: '关键词管理',icon: 'el-icon-s-order' },
             children: []
           },
           {
             path: '/keywords/synonyms/index',
             name: 'synonymsIndex',
             component: () => import ( /* webpackChunkName: "synonymsIndex" */ '@/views/keywords/synonyms.vue'),
-            meta: { title: '同义词管理',icon: 'el-icon-s-order', hidden: true },
+            meta: { title: '近义词管理',icon: 'el-icon-s-order', hidden: true },
             children: []
           }
         ]
@@ -56,7 +56,7 @@ export const constantRoutes = [{
         component: layout,
         meta: {
             title: '商品管理',
-            icon: 'el-icon-s-order'
+            icon: 'el-icon-s-grid'
         },
         children: [{
             path: '/products/index',
@@ -71,7 +71,7 @@ export const constantRoutes = [{
         component: layout,
         meta: {
             title: '问题管理',
-            icon: 'el-icon-s-order'
+            icon: 'el-icon-question'
         },
         children: [{
             path: '/gimmick/index',
@@ -79,7 +79,14 @@ export const constantRoutes = [{
             component: () => import ( /* webpackChunkName: "gimmickIndex" */ '@/views/gimmick/index.vue'),
             meta: { title: '问题管理' },
             children: []
-        }]
+        }, {
+            path: '/gimmick/detail',
+            name: 'gimmickDetail',
+            component: () => import ( /* webpackChunkName: "gimmickDetail" */ '@/views/gimmick/detail.vue'),
+            meta: { title: '问题树编辑', hidden: true },
+            children: []
+        }
+      ]
     },
     {
         path: '/login',

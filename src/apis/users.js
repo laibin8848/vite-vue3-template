@@ -1,7 +1,7 @@
 import request from "@/utils/request";
 
 export const getUserList = (data) => {
-    return request.post('/unilever/sys/user/listByPage', data)
+    return request.post(`/unilever/sys/user/listByPage?pageNo=${data.pageNo}&pageSize=${data.pageSize}`, data)
 }
 
 export const deleteUser = (id) => {

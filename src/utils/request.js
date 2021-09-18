@@ -1,17 +1,14 @@
 import axios from 'axios'
-import { ElLoading, ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus'
 
-// let loadingInstance = null
 const service = axios.create({
     baseURL: '',//import.meta.env.MODE == 'production' ? 'http://10.16.153.37:30329/unilever' : '',
     timeout: 50000,
     withCredentials: true
 })
 
-// Request interceptors
 service.interceptors.request.use(
     (config) => {
-      // loadingInstance = ElLoading.service({})
       const loginInfo = JSON.parse(sessionStorage.getItem('loginInfo'))
       let token = '';
       if (loginInfo && loginInfo.token) {
@@ -30,23 +27,16 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
     (response) => {
-        // loadingInstance.close()
         const res = response.data
-        if (res.code !== 200) {
-            if (res.code == 'E503') {
-                //redirect to login
-                sessionStorage.removeItem('auth');
-                // sessionStorage.removeItem('accessToken');
-                window.location.replace('#login');
-                return
-            } else if (res.code == 'E401') {
-                //令牌过期
-                sessionStorage.removeItem('auth')
-                window.location.replace('#login')
-                return
+        if (res.code !== 'E000') {
+            if (res.code == 'E503' || res.code == 'E401') {
+              sessionStorage.removeItem('auth');
+              window.location.replace('#login');
+              return res
+            } else {
+              ElMessage.error(res.message)
             }
-            // ElMessage.error(res.message)
-            return res;
+            throw new Error(res.message)
         } else {
             return res
         }

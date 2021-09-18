@@ -1,7 +1,7 @@
 import request from "@/utils/request";
 
 export const getSynonymsList = (data) => {
-    return request.post('/unilever/robot/option-synonyms/listByPage', data)
+    return request.post(`/unilever/robot/option-synonyms/listByPage?pageNo=${data.pageNo}&pageSize=${data.pageSize}`, data)
 }
 
 export const deleteSynonyms = (id) => {

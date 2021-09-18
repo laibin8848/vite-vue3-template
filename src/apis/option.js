@@ -1,7 +1,7 @@
 import request from "@/utils/request";
 
 export const getOptionList = (data) => {
-    return request.post('/unilever/robot/option/listByPage', data)
+    return request.post(`/unilever/robot/option/listByPage?pageNo=${data.pageNo}&pageSize=${data.pageSize}`, data)
 }
 
 export const deleteOption = (id) => {
